@@ -1,0 +1,11 @@
+# basics Executables 
+basics/args_code/args
+basics/exec_code/exec
+basics/fork_code/fork
+
+# shell Executables
+shell/dump
+shell/shell
+
+# objects
+*.o
