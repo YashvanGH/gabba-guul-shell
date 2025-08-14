@@ -2,16 +2,25 @@
 
 // Function Prototypes
 int dump(char* argv[]);
+int greet(void);
+int pwd(void);
+int cd(char* argv[]);
 
 int main(void) {
     char* line = NULL;
     char* argv[64];
     size_t len = 0;
+    char buf[1024];
 
+
+    // Word Art
+    greet();
 
     while (1) {
+        getcwd(buf, 1024);
+
         // Prompt the user for input
-        printf("GabbaGuul> ");
+        printf("GabbaGuul:%s> ", buf);
 
         // Clear the output stored in the internal buffer
         fflush(stdout);
@@ -48,8 +57,13 @@ int main(void) {
         } else if (strcmp(argv[0], "dump") == 0) {
             dump(argv);
             continue;
+        } else if (strcmp(argv[0], "pwd") == 0) {
+            pwd();
+            continue;
+        } else if (strcmp(argv[0], "cd") == 0) {
+            cd(argv);
+            continue;
         }
-        
     }
 
     free(line);
@@ -73,5 +87,28 @@ int dump(char* argv[]) {
         waitpid(pid, NULL, 0);
     }
 
+    return 0;
+}
+
+int pwd(void) {
+    char buf[1024];
+
+    getcwd(buf, 1024);
+    printf("Directory: %s\n", buf);
+    return 0;
+}
+
+int cd(char* argv[]) {
+    chdir(argv[1]);
+    return 0;
+}
+
+int greet(void) {
+    puts("   ____       _     _             ____              _ ");
+    puts("  / ___| __ _| |__ | |__  __ _   / ___|_   _ _   _ | |");
+    puts(" | |  _ / _` | '_ \\| '_ \\/ _` | | |  _| | | | | | || |");
+    puts(" | |_| | (_| | |_) | |_)  (_| | | |_| | |_| | |_| || |");
+    puts("  \\____|\\__,_|_.__/|_.__/\\__,_|  \\____|\\__,_|\\__,_||_|");
+    puts("");
     return 0;
 }
