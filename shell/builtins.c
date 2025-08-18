@@ -24,10 +24,7 @@ int dump(char* argv[]) {
 
     if (pid == 0) {
         // Child Process
-        execvp(
-            "./dump",
-            argv
-        );
+        execvp(argv[0], argv);
         exit(1);
     } else {
         // Parent Process
@@ -40,7 +37,8 @@ int dump(char* argv[]) {
 int pwd(void) {
     char buf[1024];
 
-    getcwd(buf, 1024);
+    getcwd(buf, sizeof(buf));
+
     printf("Directory: %s\n", buf);
     return 0;
 }
@@ -49,3 +47,22 @@ int cd(char* argv[]) {
     chdir(argv[1]);
     return 0;
 }
+
+int ls(char* argv[]) {
+    pid_t pid;
+
+    pid = fork();
+
+    if (pid == 0) {
+        // Child Process
+        execvp(argv[0], argv);
+        exit(1);
+    } else {
+        waitpid(pid, NULL, 0);
+    }
+
+    return 0;
+}
+
+// git bin exec
+// echo > >>

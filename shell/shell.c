@@ -64,6 +64,9 @@ int main(void) {
         } else if (strcmp(argv[0], "cd") == 0) {
             cd(argv);
             continue;
+        } else if (strcmp(argv[0], "ls") == 0) {
+            ls(argv);
+            continue;
         }
     }
 
