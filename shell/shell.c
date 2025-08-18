@@ -32,7 +32,7 @@ int main(void) {
             break;
         }
 
-        // strip trailing newline
+        // Strip trailing newline
         line[strcspn(line, "\n")] = '\0';
 
         // Tokenise into argv[]
