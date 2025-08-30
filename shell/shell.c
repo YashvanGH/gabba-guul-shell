@@ -67,6 +67,14 @@ int main(void) {
         } else if (strcmp(argv[0], "ls") == 0) {
             ls(argv);
             continue;
+        } else if (strcmp(argv[0], "echo") == 0) {
+            echo(argv);
+            continue;
+        } else if (strcmp(argv[0], "python") == 0) {
+            python_mini();
+            continue;
+        } else {
+            fprintf(stderr, "Unknown Command: %s\n", argv[0]);
         }
     }
 

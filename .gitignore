@@ -6,7 +6,7 @@ basics/fork_code/fork
 # shell Executables
 shell/dump
 shell/shell
-shell/gabba-guul
+shell/gabba_guul
 
 # objects
 *.o

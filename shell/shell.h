@@ -6,5 +6,7 @@ int dump(char* argv[]);
 int pwd(void);
 int cd(char* argv[]);
 int ls(char* argv[]);
+int echo(char* argv[]);
+int python_mini();
 
 #endif // end definition

@@ -84,6 +84,7 @@ int ls(char* argv[]) {
         fprintf(stderr, "ls: %s\n", strerror(errno));
         exit(127);
     } else {
+        // Parent Process
         waitpid(pid, NULL, 0);
     }
 
@@ -91,4 +92,50 @@ int ls(char* argv[]) {
 }
 
 // git bin exec
+
 // echo > >>
+int echo(char* argv[]) {
+    pid_t pid;
+
+    pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        return 0;
+    }
+
+    if (pid == 0) {
+        // Child Process
+        execvp(argv[0], argv);
+        exit(127);
+    } else {
+        // Parent Process
+        waitpid(pid, NULL, 0);
+    }
+
+    return 1;
+}
+
+int python_mini() {
+    pid_t pid;
+    char *argv[] = { "python.exe", NULL };
+
+    pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        return 0;
+    }
+
+    if (pid == 0) {
+        // Child Process
+        execvp("python.exe", argv);
+        fprintf(stderr, "python shell: %s\n", strerror(errno));
+        exit(1);
+    } else {
+        // Parent Process
+        waitpid(pid, NULL, 0);
+    }
+
+    return 1;
+}
