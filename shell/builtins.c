@@ -18,29 +18,6 @@ int greet(void) {
     return 0;
 }
 
-int dump(char* argv[]) {
-    pid_t pid;
-
-    pid = fork();
-
-    if (pid == -1) {
-        perror("fork");
-        return 0;
-    }
-
-    if (pid == 0) {
-        // Child Process
-        execvp(argv[0], argv);
-        perror("execvp ./dump");
-        exit(127); // Error code for command not found
-    } else {
-        // Parent Process
-        waitpid(pid, NULL, 0);
-    }
-
-    return 1;
-}
-
 int pwd(void) {
     char buf[1024];
 

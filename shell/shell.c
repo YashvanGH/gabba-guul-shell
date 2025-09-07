@@ -55,9 +55,6 @@ int main(void) {
         if (strcmp(argv[0], "exit") == 0) {
             printf("\n");
             break;
-        } else if (strcmp(argv[0], "dump") == 0) {
-            dump(argv);
-            continue;
         } else if (strcmp(argv[0], "pwd") == 0) {
             pwd();
             continue;
