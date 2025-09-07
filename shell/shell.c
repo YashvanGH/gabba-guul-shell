@@ -56,19 +56,19 @@ int main(void) {
             printf("\n");
             break;
         } else if (strcmp(argv[0], "pwd") == 0) {
-            pwd();
+            cmd_pwd();
             continue;
         } else if (strcmp(argv[0], "cd") == 0) {
-            cd(argv);
+            cmd_cd(argv);
             continue;
         } else if (strcmp(argv[0], "ls") == 0) {
-            ls(argv);
+            cmd_ls(argv);
             continue;
         } else if (strcmp(argv[0], "echo") == 0) {
-            echo(argv);
+            cmd_echo(argv);
             continue;
         } else if (strcmp(argv[0], "python") == 0) {
-            python_mini();
+            cmd_python_mini();
             continue;
         } else {
             fprintf(stderr, "Unknown Command: %s\n", argv[0]);
