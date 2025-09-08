@@ -54,9 +54,14 @@ This project is designed as a learning exercise in **C programming** and **opera
 ### Build
 ```bash
 make all
+```
+
+### Run
+```bash
 ./gabba_guul
 ```
 
-### Delete Executables
+### Cleanup
 ```bash
 make clean
+
