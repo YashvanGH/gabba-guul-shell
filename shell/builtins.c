@@ -14,6 +14,8 @@
 #include "shell.h"
 
 /* Helpers */
+
+// This is for the parent process
 static int wait_for_child(pid_t pid) {
     int status;
     
@@ -30,10 +32,13 @@ static int wait_for_child(pid_t pid) {
         break;
     }
 
+    // Exited normally
     if (WIFEXITED(status)) {
+        // Get the status code
         return WEXITSTATUS(status);
     }
 
+    // Exited due to a signal
     if (WIFSIGNALED(status)) {
         return 128 + WTERMSIG(status); // Common convention to get the exit status/code
     }
@@ -118,7 +123,46 @@ int cmd_ls(char* argv[]) {
 }
 
 int cmd_echo(char* argv[]) {
-    return run_external(argv);
+    int i = 0;
+    int is_append = 0;
+    char *redirection_file;
+
+    while (argv[i] != NULL) {
+        if (strcmp(argv[i], ">") == 0 || strcmp(argv[i], ">>") == 0) {
+            if (!strcmp(argv[i], ">>")) {
+                is_append = 1;
+            }
+
+            redirection_file = argv[i + 1];
+            argv[i] = NULL;
+            break;
+        }
+        i++;
+    }
+
+    if (redirection_file != NULL) {
+        // Change the input stream
+        if (is_append) {
+            if (freopen(redirection_file, "a", stdout) == NULL) {
+                perror("freopen");
+                return 1;
+            }
+        } else {
+            if (freopen(redirection_file, "w", stdout) == NULL) {
+                perror("freopen");
+                return 1;
+            }
+        }
+    }
+
+    int result = run_external(argv);
+    
+    if (redirection_file != NULL) {
+        // Restore stdout to the terminal i.e. /dev/tty
+        freopen("/dev/tty", "w", stdout);
+    }
+
+    return result;
 }
 
 int cmd_python_mini() {
@@ -133,12 +177,12 @@ int cmd_python_mini() {
     }
 
     if (pid == 0) {
-        // Child Process
+        /* --- Child Process --- */
         execvp("python.exe", argv);
         fprintf(stderr, "python shell: %s\n", strerror(errno));
         exit(1);
     } else {
-        // Parent Process
+        /* --- Parent Process --- */
         waitpid(pid, NULL, 0);
     }
 
